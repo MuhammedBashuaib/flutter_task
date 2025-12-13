@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: S.delegate.supportedLocales,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Task',
-        theme: AppTheme.light,
+        // theme: AppThemeData.lightTheme(),
         initialRoute: AppRoutes.splashScreen,
         onGenerateRoute: AppRoutes.onGenerateRoute,
       ),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class AppColor {
   // Primary Colors
   static const Color primaryColor = Color(0xFFec441e);
-  static const Color primaryDarkColor = Color(0xFFc63919); // A slightly darker shade of primary for contrast
+  static const Color primaryDarkColor = Color(
+    0xFFc63919,
+  ); // A slightly darker shade of primary for contrast
 
   // Accent Colors (Based on the common use of Orange in the app)
   static const Color accentColor = Colors.orange;
