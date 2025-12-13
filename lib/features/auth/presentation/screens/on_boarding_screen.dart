@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tasck_app/core/routing/app_routes.dart';
 import 'package:flutter_tasck_app/shared/data/services/shared_pref_services.dart';
 import 'package:flutter_tasck_app/shared/utils/consts.dart';
+import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -58,32 +59,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             // المحتوى
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: EdgeInsets.all(wScreen * 0.08), // responsive
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // الشعار
                     Container(
-                      width: 120,
-                      height: 120,
+                      width: wScreen * 0.30,
+                      height: wScreen * 0.30,
                       child: Image.asset(
                         'assets/images/logo_app.png',
                         fit: BoxFit.contain,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 12),
+
+                    SizedBox(height: hScreen * 0.015),
+
                     // العنوان
                     Text(
                       page.title,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 30,
+                      style: TextStyle(
+                        fontSize: fontSize(size: 30),
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 150),
+
+                    SizedBox(height: hScreen * 0.18),
 
                     // الوصف
                     Column(
@@ -95,8 +99,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: Text(
                                 "Shop smart",
                                 textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  fontSize: 26,
+                                style: TextStyle(
+                                  fontSize: fontSize(size: 26),
                                   color: Colors.red,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -106,8 +110,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: Text(
                                 "wholesale",
                                 textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  fontSize: 24,
+                                style: TextStyle(
+                                  fontSize: fontSize(size: 24),
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -118,8 +122,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           "and save your time",
                           textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 24,
+                          style: TextStyle(
+                            fontSize: fontSize(size: 24),
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
                           ),
@@ -127,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 40),
+                    SizedBox(height: hScreen * 0.05),
 
                     // المؤشر
                     Row(
@@ -138,14 +142,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(_pages.length, (index) {
                             return Container(
-                              width: index == _currentPage ? 16 : 8,
-                              height: 4,
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              width: index == _currentPage
+                                  ? wScreen * 0.04
+                                  : wScreen * 0.02,
+                              height: hScreen * 0.005,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: wScreen * 0.01,
+                              ),
                               decoration: BoxDecoration(
                                 color: index == _currentPage
                                     ? const Color(0xFFec441e)
                                     : Colors.white.withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(2),
+                                borderRadius: BorderRadius.circular(
+                                  wScreen * 0.01,
+                                ),
                               ),
                             );
                           }),
@@ -155,17 +165,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.7),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(wScreen * 0.08),
                           ),
-                          width: 150,
+                          width: wScreen * 0.40,
                           child: Padding(
-                            padding: const EdgeInsets.all(4.0),
+                            padding: EdgeInsets.all(wScreen * 0.01),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  width: 50,
-                                  height: 50,
+                                  width: wScreen * 0.12,
+                                  height: wScreen * 0.12,
                                   child: ElevatedButton(
                                     onPressed: _nextPage,
                                     style: ElevatedButton.styleFrom(
@@ -173,36 +183,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       foregroundColor: Colors.white,
                                       padding: EdgeInsets.zero,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                          wScreen * 0.06,
+                                        ),
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Text(
-                                            _currentPage == _pages.length - 1
-                                                ? 'Go'
-                                                : 'Next',
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                            ),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(
+                                          wScreen * 0.006,
+                                        ),
+                                        child: Text(
+                                          _currentPage == _pages.length - 1
+                                              ? 'Go'
+                                              : 'Next',
+                                          style: TextStyle(
+                                            fontSize: fontSize(size: 18),
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Image.asset("assets/images/a.png"),
+                                Image.asset(
+                                  "assets/images/a.png",
+                                  width: wScreen * 0.10,
+                                  height: wScreen * 0.10,
+                                  fit: BoxFit.contain,
+                                ),
                               ],
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 32),
+
+                    SizedBox(height: hScreen * 0.04),
                   ],
                 ),
               ),

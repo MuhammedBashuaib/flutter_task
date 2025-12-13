@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tasck_app/core/routing/app_routes.dart';
 import 'package:flutter_tasck_app/features/auth/cubit/login_cubit.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initializeHWFSize(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocConsumer<LoginCubit, LoginState>(
@@ -47,52 +50,53 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 200,
-
+                  height: hScreen * 0.25,
                   child: Image.asset(
                     'assets/images/Pattern.png', // Replace with your background image path
                     fit: BoxFit.fitWidth,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: EdgeInsets.all(wScreen * 0.06),
                   child: SingleChildScrollView(
                     child: Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 40),
+                          SizedBox(height: hScreen * 0.05),
                           // Logo
                           Center(
                             child: Container(
-                              width: 120,
-                              height: 120,
-
+                              width: wScreen * 0.30,
+                              height: wScreen * 0.30,
                               child: Image.asset(
                                 'assets/images/logo_app.png', // Replace with your logo image path
-                                width: 60,
-                                height: 60,
+                                width: wScreen * 0.15,
+                                height: wScreen * 0.15,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
-                          const Center(
+                          SizedBox(height: hScreen * 0.03),
+                          Center(
                             child: Text(
                               'Replaced by text',
                               style: TextStyle(
-                                fontSize: 24,
+                                fontSize: fontSize(size: 24),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          const Center(
+                          SizedBox(height: hScreen * 0.01),
+                          Center(
                             child: Text(
                               'Placeholder text area',
-                              style: TextStyle(color: Colors.grey),
+                              style: TextStyle(
+                                fontSize: fontSize(size: 14),
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 32),
+                          SizedBox(height: hScreen * 0.04),
 
                           // Tabs: Log In / Sign In
                           DefaultTabController(
@@ -107,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: hScreen * 0.03),
 
                           // Email Field
                           TextFormField(
@@ -115,11 +119,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               labelText: 'Username',
                               prefixIcon: const Icon(Icons.person),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  wScreen * 0.02,
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: wScreen * 0.04,
+                                vertical: hScreen * 0.02,
+                              ),
                             ),
+                            style: TextStyle(fontSize: fontSize(size: 16)),
                             // initialValue: 'ahmed@gmail.com',
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: hScreen * 0.02),
 
                           // Password Field
                           TextFormField(
@@ -128,29 +141,44 @@ class _LoginScreenState extends State<LoginScreen> {
                               labelText: 'Password',
                               prefixIcon: const Icon(Icons.lock),
                               suffixIcon: const Icon(Icons.visibility_off),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  wScreen * 0.02,
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: wScreen * 0.04,
+                                vertical: hScreen * 0.02,
+                              ),
                             ),
                             obscureText: true,
+                            style: TextStyle(fontSize: fontSize(size: 16)),
                             // initialValue: '******',
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: hScreen * 0.02),
 
                           // Remember Me & Forgot Password
                           Row(
                             children: [
                               Checkbox(value: false, onChanged: (_) {}),
-                              const Text('Remember Me'),
+                              Text(
+                                'Remember Me',
+                                style: TextStyle(fontSize: fontSize(size: 14)),
+                              ),
                               const Spacer(),
                               TextButton(
                                 onPressed: () {},
-                                child: const Text(
+                                child: Text(
                                   'Forgot Password?',
-                                  style: TextStyle(color: Color(0xFFec441e)),
+                                  style: TextStyle(
+                                    color: const Color(0xFFec441e),
+                                    fontSize: fontSize(size: 14),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: hScreen * 0.03),
 
                           // Login Button
                           Container(
@@ -165,27 +193,31 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFec441e),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: hScreen * 0.02,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(
+                                    wScreen * 0.075,
+                                  ),
                                 ),
                               ),
-                              child: const Text(
+                              child: Text(
                                 'Log In',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: fontSize(size: 18),
                                   color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
 
-                          const SizedBox(height: 24),
+                          SizedBox(height: hScreen * 0.03),
 
                           // Divider
-                          const Divider(height: 40, thickness: 1),
+                          Divider(height: hScreen * 0.05, thickness: 1),
+
+                          SizedBox(height: hScreen * 0.02),
 
                           // Google Button
                           Container(
@@ -194,24 +226,29 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {},
                               icon: Image.asset(
                                 'assets/images/google.png', // Replace with your Google logo image path
-                                width: 24,
-                                height: 24,
+                                width: wScreen * 0.06,
+                                height: wScreen * 0.06,
                               ),
-                              label: const Text('Continue with Google'),
+                              label: Text(
+                                'Continue with Google',
+                                style: TextStyle(fontSize: fontSize(size: 16)),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: hScreen * 0.02,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(
+                                    wScreen * 0.075,
+                                  ),
                                   side: BorderSide(color: Colors.grey[300]!),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: hScreen * 0.02),
 
                           // Facebook Button
                           Container(
@@ -220,25 +257,30 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {},
                               icon: Image.asset(
                                 'assets/images/facebook.png',
-                                width: 24,
-                                height: 24,
+                                width: wScreen * 0.06,
+                                height: wScreen * 0.06,
                               ),
-                              label: const Text('Continue with Facebook'),
+                              label: Text(
+                                'Continue with Facebook',
+                                style: TextStyle(fontSize: fontSize(size: 16)),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: hScreen * 0.02,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(
+                                    wScreen * 0.075,
+                                  ),
                                   side: BorderSide(color: Colors.grey[300]!),
                                 ),
                               ),
                             ),
                           ),
 
-                          const SizedBox(height: 20),
+                          SizedBox(height: hScreen * 0.025),
                         ],
                       ),
                     ),
@@ -247,45 +289,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           );
-
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(20.0),
-          //     child: Center(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           TextField(
-          //             controller: username,
-          //             decoration: InputDecoration(
-          //               labelText: 'Username',
-          //               border: OutlineInputBorder(),
-          //             ),
-          //           ),
-          //           SizedBox(height: 20),
-          //           TextField(
-          //             controller: password,
-          //             obscureText: true,
-          //             decoration: InputDecoration(
-          //               labelText: 'Password',
-          //               border: OutlineInputBorder(),
-          //             ),
-          //           ),
-          //           SizedBox(height: 30),
-          //           ElevatedButton(
-          //             onPressed: () {
-          //               // استدعاء دالة login من الـ Cubit
-          //               context.read<LoginCubit>().login(
-          //                 userName: username.text.trim(),
-          //                 password: password.text,
-          //               );
-          //             },
-          //             child: Text("Login"),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // );
         },
       ),
     );
