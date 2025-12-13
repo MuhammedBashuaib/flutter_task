@@ -11,14 +11,14 @@ class ProductModel {
   final String brand;
   final String sku;
   final int weight;
-  final Dimensions dimensions;
+  final Dimensions? dimensions;
   final String warrantyInformation;
   final String shippingInformation;
   final String availabilityStatus;
   final List<Review> reviews;
   final String returnPolicy;
   final int minimumOrderQuantity;
-  final Meta meta;
+  final Meta? meta;
   final List<String> images;
   final String thumbnail;
 
@@ -104,14 +104,14 @@ class ProductModel {
       'brand': brand,
       'sku': sku,
       'weight': weight,
-      'dimensions': dimensions.toJson(),
+      'dimensions': dimensions?.toJson(),
       'warrantyInformation': warrantyInformation,
       'shippingInformation': shippingInformation,
       'availabilityStatus': availabilityStatus,
       'reviews': reviews.map((x) => x.toJson()).toList(),
       'returnPolicy': returnPolicy,
       'minimumOrderQuantity': minimumOrderQuantity,
-      'meta': meta.toJson(),
+      'meta': meta?.toJson(),
       'images': images,
       'thumbnail': thumbnail,
     };

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tasck_app/features/home/cubit/horizontal_fetch_products_cubit.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 import 'package:flutter_tasck_app/features/home/presentation/widgets/custom_product_cart_horiz.dart';
+import 'package:flutter_tasck_app/features/home/presentation/widgets/latest_products_section_loding.dart';
 
 class HorizontalPopularProductsSection extends StatefulWidget {
   const HorizontalPopularProductsSection({super.key, this.height = 260});
@@ -88,7 +89,8 @@ class _HorizontalPopularProductsSectionState
               }
 
               if (isInitialLoading && products.isEmpty) {
-                return const Center(child: CircularProgressIndicator());
+                // return const Center(child: CircularProgressIndicator());
+                return LatestProductsSectionLoding();
               }
 
               if (products.isEmpty) {

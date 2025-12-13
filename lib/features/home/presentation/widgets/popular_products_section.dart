@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tasck_app/features/home/cubit/fetch_products_cubit.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 import 'package:flutter_tasck_app/features/home/presentation/widgets/custom_product_card.dart';
+import 'package:flutter_tasck_app/features/home/presentation/widgets/popular_products_section_loding.dart';
 
 class PopularProductsSection extends StatefulWidget {
   const PopularProductsSection({super.key});
@@ -91,12 +92,7 @@ class _PopularProductsSectionState extends State<PopularProductsSection> {
 
         // عرض مؤشر التحميل فقط أثناء التحميل الأولي وعندما تكون القائمة فارغة
         if (isInitialLoading && products.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ), // مؤشر تحميل دائري
-          );
+          return PopularProductsSectionLoding();
         }
 
         // البناء الرئيسي للواجهة
