@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +56,15 @@ class ProductDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Fragrances',
+                            product.category,
                             style: TextStyle(
                               color: Colors.orange[700],
                               fontSize: 14,
                             ),
                           ),
                           const SizedBox(height: 4),
-                          const Text(
-                            'Dolce Shine Eau',
+                          Text(
+                            product.title,
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -79,8 +81,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              const Text(
-                                '3,500 RY',
+                              Text(
+                                '${product.price} RY',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -89,7 +91,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           Row(
                             children: [
                               Icon(Icons.star, color: Colors.orange, size: 16),
-                              const Text('4.8'),
+                              Text(product.rating.toString()),
                             ],
                           ),
                         ],

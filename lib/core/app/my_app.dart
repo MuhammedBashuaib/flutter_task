@@ -10,6 +10,8 @@ import 'package:flutter_tasck_app/core/routing/app_routes.dart';
 import 'package:flutter_tasck_app/core/theme/app_theme.dart';
 import 'package:flutter_tasck_app/features/auth/cubit/login_cubit.dart';
 import 'package:flutter_tasck_app/features/auth/data/services/auth_services.dart';
+import 'package:flutter_tasck_app/features/home/cubit/fetch_products_cubit.dart';
+import 'package:flutter_tasck_app/features/home/data/services/product_services.dart';
 // import 'package:flutter_tasck_app/features/auth/data/services/auth_services.dart';
 import 'package:flutter_tasck_app/shared/data/services/storage_service.dart';
 import 'package:flutter_tasck_app/shared/utils/sizes.dart';
@@ -24,18 +26,23 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    final storage = StorageService();
+    final dioConsumer = DioConsumer(dio: Dio(), storageService: storage);
+
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
+        BlocProvider<LoginCubit>(
           create: (context) => LoginCubit(
-            authRemoteDataSource: AuthServicesImpl(
-              apiConsumer: DioConsumer(
-                dio: Dio(),
-                storageService: StorageService(),
-              ),
-            ),
-            storageService: StorageService(),
+            authRemoteDataSource: AuthServicesImpl(apiConsumer: dioConsumer),
+            storageService: storage,
           ),
+        ),
+
+        // FetchProductsCubit provider: call fetchProducts on create
+        BlocProvider<FetchProductsCubit>(
+          create: (context) =>
+              FetchProductsCubit(ProductServicesImpl(apiConsumer: dioConsumer))
+                ..fetchProducts(limit: 10, skip: 0),
         ),
       ],
       child: MaterialApp(

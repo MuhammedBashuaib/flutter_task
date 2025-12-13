@@ -28,29 +28,29 @@ class ApiInterceptors extends Interceptor {
       'Accept-Language': 'en', // يمكن تغييرها حسب لغة التطبيق
     });
 
-    log('🚀 [REQUEST] ${options.method} ${options.uri}');
-    log('📦 Headers: ${options.headers}');
-    if (options.data != null) {
-      log('📤 Body: ${options.data}');
-    }
+    // log('🚀 [REQUEST] ${options.method} ${options.uri}');
+    // log('📦 Headers: ${options.headers}');
+    // if (options.data != null) {
+    //   log('📤 Body: ${options.data}');
+    // }
 
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    log('✅ [RESPONSE] ${response.statusCode} ${response.requestOptions.uri}');
-    log('📥 Data: ${response.data}');
+    // log('✅ [RESPONSE] ${response.statusCode} ${response.requestOptions.uri}');
+    // log('📥 Data: ${response.data}');
 
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    log(
-      '❌ [ERROR] ${err.type} ${err.response?.statusCode} ${err.requestOptions.uri}',
-    );
-    log('📥 Error Data: ${err.response?.data}');
+    // log(
+    //   '❌ [ERROR] ${err.type} ${err.response?.statusCode} ${err.requestOptions.uri}',
+    // );
+    // log('📥 Error Data: ${err.response?.data}');
 
     super.onError(err, handler);
   }
