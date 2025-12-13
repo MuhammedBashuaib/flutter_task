@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_tasck_app/core/routing/app_routes.dart';
 import 'package:flutter_tasck_app/shared/data/services/shared_pref_services.dart';
 import 'package:flutter_tasck_app/shared/utils/consts.dart';
@@ -50,7 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.grey[500]),
+        decoration: BoxDecoration(color: AppColor.grey500),
         child: Stack(
           children: [
             // الخلفية
@@ -70,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Image.asset(
                         'assets/images/logo_app.png',
                         fit: BoxFit.contain,
-                        color: Colors.white,
+                        color: AppColor.white,
                       ),
                     ),
 
@@ -83,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: TextStyle(
                         fontSize: fontSize(size: 30),
                         fontWeight: FontWeight.w900,
-                        color: Colors.white,
+                        color: AppColor.white,
                       ),
                     ),
 
@@ -101,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: fontSize(size: 26),
-                                  color: Colors.red,
+                                  color: AppColor.red,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -112,7 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: fontSize(size: 24),
-                                  color: Colors.white,
+                                  color: AppColor.white,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -124,7 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: fontSize(size: 24),
-                            color: Colors.white,
+                            color: AppColor.white,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -151,8 +152,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                               decoration: BoxDecoration(
                                 color: index == _currentPage
-                                    ? const Color(0xFFec441e)
-                                    : Colors.white.withOpacity(0.5),
+                                    ? AppColor.primaryColor
+                                    : AppColor.white.withOpacity(0.5),
                                 borderRadius: BorderRadius.circular(
                                   wScreen * 0.01,
                                 ),
@@ -164,7 +165,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         // الزر
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.7),
+                            color: AppColor.white.withOpacity(0.7),
                             borderRadius: BorderRadius.circular(wScreen * 0.08),
                           ),
                           width: wScreen * 0.40,
@@ -179,8 +180,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   child: ElevatedButton(
                                     onPressed: _nextPage,
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFFec441e),
-                                      foregroundColor: Colors.white,
+                                      backgroundColor: AppColor.primaryColor,
+                                      foregroundColor: AppColor.white,
                                       padding: EdgeInsets.zero,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(

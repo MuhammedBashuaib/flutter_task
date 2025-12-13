@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tasck_app/core/routing/app_routes.dart';
 import 'package:flutter_tasck_app/features/auth/cubit/login_cubit.dart';
@@ -21,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     initializeHWFSize(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.error.message),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColor.red,
               ),
             );
           }
@@ -92,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Placeholder text area',
                               style: TextStyle(
                                 fontSize: fontSize(size: 14),
-                                color: Colors.grey,
+                                color: AppColor.grey,
                               ),
                             ),
                           ),
@@ -102,9 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           DefaultTabController(
                             length: 2,
                             child: TabBar(
-                              indicatorColor: const Color(0xFFec441e),
-                              labelColor: Colors.black,
-                              unselectedLabelColor: Colors.grey,
+                              indicatorColor: AppColor.primaryColor,
+                              labelColor: AppColor.black,
+                              unselectedLabelColor: AppColor.grey,
                               tabs: const [
                                 Tab(text: 'Log In'),
                                 Tab(text: 'Sign In'),
@@ -171,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Text(
                                   'Forgot Password?',
                                   style: TextStyle(
-                                    color: const Color(0xFFec441e),
+                                    color: AppColor.primaryColor,
                                     fontSize: fontSize(size: 14),
                                   ),
                                 ),
@@ -192,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFec441e),
+                                backgroundColor: AppColor.primaryColor,
                                 padding: EdgeInsets.symmetric(
                                   vertical: hScreen * 0.02,
                                 ),
@@ -206,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'Log In',
                                 style: TextStyle(
                                   fontSize: fontSize(size: 18),
-                                  color: Colors.white,
+                                  color: AppColor.white,
                                 ),
                               ),
                             ),
@@ -234,8 +235,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(fontSize: fontSize(size: 16)),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black,
+                                backgroundColor: AppColor.white,
+                                foregroundColor: AppColor.black,
                                 padding: EdgeInsets.symmetric(
                                   vertical: hScreen * 0.02,
                                 ),
@@ -243,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(
                                     wScreen * 0.075,
                                   ),
-                                  side: BorderSide(color: Colors.grey[300]!),
+                                  side: BorderSide(color: AppColor.grey300),
                                 ),
                               ),
                             ),
@@ -265,8 +266,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(fontSize: fontSize(size: 16)),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black,
+                                backgroundColor: AppColor.white,
+                                foregroundColor: AppColor.black,
                                 padding: EdgeInsets.symmetric(
                                   vertical: hScreen * 0.02,
                                 ),
@@ -274,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(
                                     wScreen * 0.075,
                                   ),
-                                  side: BorderSide(color: Colors.grey[300]!),
+                                  side: BorderSide(color: AppColor.grey300),
                                 ),
                               ),
                             ),

@@ -5,7 +5,7 @@ class AppTheme {
 
   static ThemeData get light {
     return ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
       useMaterial3: true,
     );
   }
