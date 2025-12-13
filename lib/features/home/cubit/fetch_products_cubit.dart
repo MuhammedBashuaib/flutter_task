@@ -1,92 +1,3 @@
-// import 'dart:developer';
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
-// import 'package:flutter_tasck_app/features/home/data/models/product_reposetry.dart' hide ProductModel;
-// import 'package:flutter_tasck_app/features/home/data/services/product_services.dart';
-
-// part 'fetch_products_state.dart';
-
-// class FetchProductsCubit extends Cubit<FetchProductsState> {
-//   FetchProductsCubit(this.productServices) : super(FetchProductsInitial());
-
-//   final ProductServices productServices;
-
-//   Future<void> fetchProducts({required int limit, required int skip}) async {
-//     emit(FetchProductsLoading());
-
-//     try {
-//       log("start");
-//       final productsResponse = await productServices.fetchProducts(
-//         limit: limit,
-//         skip: skip,
-//       );
-//       log("end");
-//       emit(FetchProductsSuccess(productsResponse));
-//     } catch (e) {
-//       // log(e.toString());
-//       // emit(FetchProductsFailure('Failed to fetch products: $e'));
-//     }
-//   }
-
-//   Future<void> fetchMoreProducts() async {
-//     final current = state;
-//     ProductsResponse? previousResponse;
-
-//     if (current is FetchProductsSuccess) {
-//       previousResponse = current.response;
-//     } else if (current is FetchProductsLoadingMore) {
-//       // already loading more -> avoid duplicate
-//       return;
-//     } else if (current is FetchProductsLoadMoreFailure) {
-//       previousResponse = current.previousResponse;
-//     } else {
-//       // nothing to load more from
-//       return;
-//     }
-
-//     if (previousResponse == null) return;
-//     if (!previousResponse.hasMore) return;
-
-//     emit(FetchProductsLoadingMore(previousResponse));
-
-//     try {
-//       final nextResponse = await productServices.fetchProducts(
-//         limit: previousResponse.limit,
-//         skip: previousResponse.nextPageSkip,
-//       );
-
-//       final combined = ProductsResponse(
-//         products: [...previousResponse.products, ...nextResponse.products],
-//         total: nextResponse.total,
-//         skip: previousResponse.skip,
-//         limit: previousResponse.limit,
-//       );
-
-//       emit(FetchProductsSuccess(combined));
-//     } catch (e) {
-//       emit(
-//         FetchProductsLoadMoreFailure(
-//           'Failed to load more products: $e',
-//           previousResponse,
-//         ),
-//       );
-//     }
-//   }
-
-//   void handelpagination({
-//     required ScrollController scrollController,
-//     required double loadMoreTirgger,
-//   }) {
-//     final offset = scrollController.offset;
-//     final maxScrollExtent = scrollController.position.maxScrollExtent;
-//     if (offset >= maxScrollExtent - loadMoreTirgger) {
-//       fetchMoreProducts();
-//     }
-//   }
-// }
-// ...existing code...
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -131,80 +42,6 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
     }
   }
 
-  /// تحميل الصفحة التالية ودمجها مع الموجود حالياً.
-  /// يتجاهل النداء إذا كان يتم تحميل المزيد الآن أو لا يوجد بيانات سابقة قابلة للتحميل منها.
-  // Future<void> fetchMoreProducts() async {
-  //   if (_isLoadingMore) return;
-
-  //   final current = state;
-  //   ProductsResponse? previousResponse;
-
-  //   if (current is FetchProductsSuccess) {
-  //     previousResponse = current.response;
-  //   } else if (current is FetchProductsLoadingMore) {
-  //     // إذا نحن في LoadingMore حالياً فلا نقوم بشيء
-  //     return;
-  //   } else if (current is FetchProductsLoadMoreFailure) {
-  //     previousResponse = current.previousResponse;
-  //   } else {
-  //     // لا يوجد استجابة سابقة لنُحمّل منها
-  //     return;
-  //   }
-
-  //   if (previousResponse == null) return;
-
-  //   final hasMore =
-  //       (previousResponse.skip + previousResponse.limit) <
-  //       previousResponse.total;
-  //   if (!hasMore) return;
-
-  //   final nextSkip = previousResponse.skip + previousResponse.limit;
-
-  //   _isLoadingMore = true;
-  //   emit(FetchProductsLoadingMore(previousResponse));
-
-  //   try {
-  //     final nextResponse = await productServices.fetchProducts(
-  //       limit: previousResponse.limit,
-  //       skip: nextSkip,
-  //     );
-
-  //     // دمج مع التأكد من عدم تكرار المنتجات (حسب id)
-  //     final combinedList = <int, ProductModel>{};
-  //     for (final p in previousResponse.products) {
-  //       combinedList[p.id] = p;
-  //     }
-  //     for (final p in nextResponse.products) {
-  //       combinedList[p.id] = p;
-  //     }
-  //     final mergedProducts = combinedList.values.toList();
-
-  //     final combined = ProductsResponse(
-  //       products: mergedProducts,
-  //       total: nextResponse.total,
-  //       // احتفظ بالـ skip الأصلي لتبيان بداية المجموعة
-  //       skip: previousResponse.skip,
-  //       limit: previousResponse.limit,
-  //     );
-
-  //     emit(FetchProductsSuccess(combined));
-  //   } on AppException catch (e) {
-  //     emit(
-  //       FetchProductsLoadMoreFailure(e.errorModel.message, previousResponse),
-  //     );
-  //   } catch (e) {
-  //     emit(
-  //       FetchProductsLoadMoreFailure(
-  //         'Failed to load more products: $e',
-  //         previousResponse,
-  //       ),
-  //     );
-  //   } finally {
-  //     _isLoadingMore = false;
-  //   }
-  // }
-
-  // ...existing code...
   Future<void> fetchMoreProducts() async {
     if (_isLoadingMore) return;
 
@@ -275,7 +112,6 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
     }
   }
 
-  // ...existing code...
   /// استماع للتمرير لتحميل المزيد تلقائياً
   void handelpagination({
     required ScrollController scrollController,
@@ -289,4 +125,3 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
     }
   }
 }
-// ...existing code...

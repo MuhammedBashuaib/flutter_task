@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tasck_app/features/home/cubit/fetch_products_cubit.dart';
 
 import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 import 'package:flutter_tasck_app/features/home/presentation/widgets/home_header.dart';
@@ -16,19 +14,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final ScrollController scrollController;
   @override
   void initState() {
-    scrollController = ScrollController();
-    BlocProvider.of<FetchProductsCubit>(
-      context,
-    ).fetchProducts(limit: 10, skip: 0);
     super.initState();
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
     super.dispose();
   }
 
@@ -73,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: hScreen * 0.03),
 
                       // Latest Products Section
-                      const LatestProductsSection(),
+                      const HorizontalPopularProductsSection(),
 
                       // Spacing
                       SizedBox(height: hScreen * 0.03),

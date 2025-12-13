@@ -11,6 +11,7 @@ import 'package:flutter_tasck_app/core/theme/app_theme.dart';
 import 'package:flutter_tasck_app/features/auth/cubit/login_cubit.dart';
 import 'package:flutter_tasck_app/features/auth/data/services/auth_services.dart';
 import 'package:flutter_tasck_app/features/home/cubit/fetch_products_cubit.dart';
+import 'package:flutter_tasck_app/features/home/cubit/horizontal_fetch_products_cubit.dart';
 import 'package:flutter_tasck_app/features/home/data/services/product_services.dart';
 // import 'package:flutter_tasck_app/features/auth/data/services/auth_services.dart';
 import 'package:flutter_tasck_app/shared/data/services/storage_service.dart';
@@ -43,6 +44,11 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               FetchProductsCubit(ProductServicesImpl(apiConsumer: dioConsumer))
                 ..fetchProducts(limit: 10, skip: 0),
+        ),
+        BlocProvider<HorizontalFetchProductsCubit>(
+          create: (context) => HorizontalFetchProductsCubit(
+            ProductServicesImpl(apiConsumer: dioConsumer),
+          )..fetchHorizontalProducts(limit: 10, skip: 0),
         ),
       ],
       child: MaterialApp(

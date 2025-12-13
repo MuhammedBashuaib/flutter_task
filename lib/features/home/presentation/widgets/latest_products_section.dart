@@ -1,161 +1,139 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasck_app/shared/utils/sizes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tasck_app/features/home/cubit/horizontal_fetch_products_cubit.dart';
+import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
+import 'package:flutter_tasck_app/features/home/presentation/widgets/custom_product_cart_horiz.dart';
 
-class LatestProductsSection extends StatelessWidget {
-  const LatestProductsSection({super.key});
+class HorizontalPopularProductsSection extends StatefulWidget {
+  const HorizontalPopularProductsSection({super.key, this.height = 260});
+
+  final double height;
+
+  @override
+  State<HorizontalPopularProductsSection> createState() =>
+      _HorizontalPopularProductsSectionState();
+}
+
+class _HorizontalPopularProductsSectionState
+    extends State<HorizontalPopularProductsSection> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+
+    // optional: trigger initial load if not loaded yet
+    final cubit = context.read<HorizontalFetchProductsCubit>();
+    if (cubit.state is HorizontalFetchProductsInitial) {
+      cubit.fetchHorizontalProducts(limit: 10, skip: 0);
+    }
+  }
+
+  void _onScroll() {
+    // use the horizontal cubit's pagination helper
+    context.read<HorizontalFetchProductsCubit>().handlePagination(
+      scrollController: _scrollController,
+      loadMoreTirgger: 150.0,
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    initializeHWFSize(context);
+    return SizedBox(
+      height: widget.height,
+      child:
+          BlocConsumer<
+            HorizontalFetchProductsCubit,
+            HorizontalFetchProductsState
+          >(
+            listener: (context, state) {
+              if (state is HorizontalFetchProductsFailure) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
+              } else if (state is HorizontalFetchProductsLoadMoreFailure) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
+              }
+            },
+            builder: (context, state) {
+              List<ProductModel> products = [];
+              bool isInitialLoading = false;
+              bool isLoadingMore = false;
+              bool hasMore = false;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Latest Products',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSize(size: 18),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'View All',
-                  style: TextStyle(
-                    color: Colors.orange,
-                    fontSize: fontSize(size: 14),
+              if (state is HorizontalFetchProductsLoading) {
+                isInitialLoading = true;
+              } else if (state is HorizontalFetchProductsSuccess) {
+                products = state.products;
+                hasMore = state.hasMore;
+              } else if (state is HorizontalFetchProductsLoadingMore) {
+                products = state.previousResponse.products;
+                isLoadingMore = true;
+                hasMore = state.previousHasMore;
+              } else if (state is HorizontalFetchProductsLoadMoreFailure) {
+                products = state.previousResponse.products;
+                final prev = state.previousResponse;
+                hasMore = (prev.skip + prev.limit) < prev.total;
+              }
+
+              if (isInitialLoading && products.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (products.isEmpty) {
+                return const Center(
+                  child: Text(
+                    'لا توجد منتجات للعرض',
+                    style: TextStyle(color: Colors.grey),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: hScreen * 0.02),
-        SizedBox(
-          height: hScreen * 0.24,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(right: wScreen * 0.02),
-                child: Container(
-                  width: wScreen * 0.4,
-                  padding: EdgeInsets.all(wScreen * 0.03),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(wScreen * 0.0375),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        blurRadius: 5,
-                        offset: Offset(0, hScreen * 0.002),
+                );
+              }
+
+              final itemCount = products.length + (isLoadingMore ? 1 : 0);
+
+              return ListView.separated(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                itemCount: itemCount,
+                itemBuilder: (context, index) {
+                  if (index < products.length) {
+                    final product = products[index];
+                    return SizedBox(
+                      width: 200,
+                      child: CustomProductCartHoriz(
+                        key: ValueKey('h-${product.id}'),
+                        product: product,
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: hScreen * 0.08,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(wScreen * 0.025),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.local_drink,
-                            size: fontSize(size: 35),
-                            color: Colors.grey[700],
-                          ),
-                        ),
+                    );
+                  }
+
+                  // loading-more indicator item
+                  return SizedBox(
+                    width: 120,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(strokeWidth: 2.5),
                       ),
-                      SizedBox(height: hScreen * 0.008),
-                      Text(
-                        'Replaced by text',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: fontSize(size: 13),
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: hScreen * 0.003),
-                      Text(
-                        'Placeholder Text Box',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: fontSize(size: 11),
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: hScreen * 0.008),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              '3.000 RY',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSize(size: 13),
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                                size: fontSize(size: 12),
-                              ),
-                              SizedBox(width: wScreen * 0.01),
-                              Text(
-                                '4.5',
-                                style: TextStyle(fontSize: fontSize(size: 11)),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: hScreen * 0.008),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          width: wScreen * 0.06,
-                          height: wScreen * 0.06,
-                          decoration: BoxDecoration(
-                            color: Colors.orange[100],
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.orange[700],
-                            size: fontSize(size: 12),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
+                separatorBuilder: (_, __) => const SizedBox(width: 12),
               );
             },
           ),
-        ),
-      ],
     );
   }
 }
