@@ -137,7 +137,7 @@ class CustomProductCard extends StatelessWidget {
                 SizedBox(width: wScreen * 0.02),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -154,9 +154,7 @@ class CustomProductCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Expanded(
-                    //   child: SizedBox.shrink(), // يأخذ المساحة المتبقية
-                    // ),
+                    SizedBox(height: hScreen * 0.02),
                     Container(
                       width: wScreen * 0.06,
                       height: wScreen * 0.06,
