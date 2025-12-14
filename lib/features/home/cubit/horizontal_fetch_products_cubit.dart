@@ -60,7 +60,7 @@ class HorizontalFetchProductsCubit extends Cubit<HorizontalFetchProductsState> {
       return;
     }
 
-    if (previous == null) return;
+    // if (previous == null) return;
     final hasMore = (previous.skip + previous.limit) < previous.total;
     if (!hasMore) return;
 

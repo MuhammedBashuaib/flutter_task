@@ -60,7 +60,7 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
       return;
     }
 
-    if (previousResponse == null) return;
+    // if (previousResponse == null) return;
 
     final hasMore =
         (previousResponse.skip + previousResponse.limit) <
