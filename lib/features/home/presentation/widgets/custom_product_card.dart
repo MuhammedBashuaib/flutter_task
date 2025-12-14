@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_tasck_app/core/routing/app_routes.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 import 'package:flutter_tasck_app/shared/utils/sizes.dart';
@@ -107,7 +108,7 @@ class CustomProductCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.star,
-                              color: Colors.orange,
+                              color: AppColor.primaryColor,
                               size: fontSize(size: 14),
                             ),
                             SizedBox(width: wScreen * 0.01),

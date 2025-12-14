@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 import 'package:flutter_tasck_app/shared/widgets/custom_cached_network_image.dart';
@@ -91,7 +92,7 @@ class CustomProductCartHoriz extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.star,
-                      color: Colors.orange,
+                      color: AppColor.primaryColor,
                       size: fontSize(size: 12),
                     ),
                     SizedBox(width: wScreen * 0.01),

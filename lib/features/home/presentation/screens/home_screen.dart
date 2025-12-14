@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/core/constants/app_color.dart';
 
 import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 import 'package:flutter_tasck_app/features/home/presentation/widgets/home_header.dart';
@@ -90,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text(
                                 'View All',
                                 style: TextStyle(
-                                  color: Colors.orange,
+                                  color: AppColor.primaryColor,
                                   fontSize: fontSize(size: 14),
                                 ),
                               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -92,7 +93,11 @@ class ProductDetailsScreen extends StatelessWidget {
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                              Icon(Icons.star, color: Colors.orange, size: 16),
+                              Icon(
+                                Icons.star,
+                                color: AppColor.primaryColor,
+                                size: 16,
+                              ),
                               Text(product.rating.toString()),
                             ],
                           ),
