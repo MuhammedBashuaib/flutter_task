@@ -154,7 +154,7 @@ class CustomProductCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: hScreen * 0.02),
+                    // SizedBox(height: hScreen * 0.02),
                     Container(
                       width: wScreen * 0.06,
                       height: wScreen * 0.06,

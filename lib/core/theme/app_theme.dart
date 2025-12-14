@@ -50,107 +50,107 @@ class AppThemeData {
     primaryColorDark: appPrimaryColorDark,
     // تمت إزالة primaryColorLight لأنه غير موجود في AppColor
 
-    // 1. ثيم الأزرار المرتفعة
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: const WidgetStatePropertyAll(Size(100, 50)),
-        foregroundColor: const WidgetStatePropertyAll(appWhite),
-        iconColor: const WidgetStatePropertyAll(appWhite),
-        backgroundColor: const WidgetStatePropertyAll(appPrimaryColor),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-        elevation: const WidgetStatePropertyAll(2),
-      ),
-    ),
+    // // 1. ثيم الأزرار المرتفعة
+    // elevatedButtonTheme: ElevatedButtonThemeData(
+    //   style: ButtonStyle(
+    //     minimumSize: const WidgetStatePropertyAll(Size(100, 50)),
+    //     foregroundColor: const WidgetStatePropertyAll(appWhite),
+    //     iconColor: const WidgetStatePropertyAll(appWhite),
+    //     backgroundColor: const WidgetStatePropertyAll(appPrimaryColor),
+    //     shape: WidgetStatePropertyAll(
+    //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    //     ),
+    //     elevation: const WidgetStatePropertyAll(2),
+    //   ),
+    // ),
 
-    // 2. ثيم شريط التطبيق (AppBar)
-    appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
-        color: appBlack,
-        fontFamily: defaultFont,
-        fontSize: 20,
-        height: 1.4,
-        fontWeight: FontWeight.bold,
-      ),
-      backgroundColor: appScaffoldBackgroundColor,
-      centerTitle: true,
-      scrolledUnderElevation: 3,
-      surfaceTintColor: appScaffoldBackgroundColor,
-      shadowColor: AppColor.grey200, // استخدام لون رمادي خفيف للظل
-      iconTheme: const IconThemeData(color: appBlack),
-    ),
+    // // 2. ثيم شريط التطبيق (AppBar)
+    // appBarTheme: AppBarTheme(
+    //   titleTextStyle: TextStyle(
+    //     color: appBlack,
+    //     fontFamily: defaultFont,
+    //     fontSize: 20,
+    //     height: 1.4,
+    //     fontWeight: FontWeight.bold,
+    //   ),
+    //   backgroundColor: appScaffoldBackgroundColor,
+    //   centerTitle: true,
+    //   scrolledUnderElevation: 3,
+    //   surfaceTintColor: appScaffoldBackgroundColor,
+    //   shadowColor: AppColor.grey200, // استخدام لون رمادي خفيف للظل
+    //   iconTheme: const IconThemeData(color: appBlack),
+    // ),
 
-    iconTheme: const IconThemeData(size: 24, color: appIconColorPrimary),
+    // iconTheme: const IconThemeData(size: 24, color: appIconColorPrimary),
 
-    // 3. نظام الألوان (ColorScheme) - هام
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: appPrimaryColor,
-      brightness: Brightness.light,
-      primary: appPrimaryColor,
-      onPrimary: appWhite,
-      surface: appWhite,
-      background: appScaffoldBackgroundColor,
-      error: AppColor.red,
-      // يمكن إضافة ألوان أخرى مثل secondary, onSurface, etc.
-    ),
-    useMaterial3: true,
+    // // 3. نظام الألوان (ColorScheme) - هام
+    // colorScheme: ColorScheme.fromSeed(
+    //   seedColor: appPrimaryColor,
+    //   brightness: Brightness.light,
+    //   primary: appPrimaryColor,
+    //   onPrimary: appWhite,
+    //   surface: appWhite,
+    //   background: appScaffoldBackgroundColor,
+    //   error: AppColor.red,
+    //   // يمكن إضافة ألوان أخرى مثل secondary, onSurface, etc.
+    // ),
+    // useMaterial3: true,
 
-    dividerColor: apptBorder, // لون الحدود الفاتح
-    dividerTheme: DividerThemeData(color: apptBorder, thickness: 1),
+    // dividerColor: apptBorder, // لون الحدود الفاتح
+    // dividerTheme: DividerThemeData(color: apptBorder, thickness: 1),
 
-    progressIndicatorTheme: ProgressIndicatorThemeData(color: appPrimaryColor),
+    // progressIndicatorTheme: ProgressIndicatorThemeData(color: appPrimaryColor),
 
-    // 4. ثيم حقول الإدخال (Input Decoration)
-    inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
-      filled: true,
-      fillColor: AppColor.white, // خلفية حقل الإدخال
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(
-          width: 0.5,
-          color: apptBorder, // لون الحدود الطبيعي
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: appPrimaryColor, width: 1.5),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppColor.red, width: 1.5),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppColor.red, width: 1.5),
-      ),
-      // hintStyle: _textStyle.bodyMedium.copyWith(
-      //   color: AppColor.grey500,
-      // ), // استخدام درجة من الرمادي
-    ),
+    // // 4. ثيم حقول الإدخال (Input Decoration)
+    // inputDecorationTheme: InputDecorationTheme(
+    //   contentPadding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
+    //   filled: true,
+    //   fillColor: AppColor.white, // خلفية حقل الإدخال
+    //   enabledBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: BorderSide(
+    //       width: 0.5,
+    //       color: apptBorder, // لون الحدود الطبيعي
+    //     ),
+    //   ),
+    //   focusedBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: BorderSide(color: appPrimaryColor, width: 1.5),
+    //   ),
+    //   errorBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: const BorderSide(color: AppColor.red, width: 1.5),
+    //   ),
+    //   focusedErrorBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: const BorderSide(color: AppColor.red, width: 1.5),
+    //   ),
+    //   // hintStyle: _textStyle.bodyMedium.copyWith(
+    //   //   color: AppColor.grey500,
+    //   // ), // استخدام درجة من الرمادي
+    // ),
 
-    // 5. ثيم النصوص (حافظت على الهيكل، لون النص الرئيسي سيكون appBlack ما لم يُحدد خلاف ذلك)
-    textTheme: TextTheme(
-      // ... (جميع النصوص تم تكييفها مع الخط) ...
-      // displayLarge: _textStyle.displayLarge.copyWith(
-      //   fontFamily: defaultFont,
-      //   color: appBlack,
-      // ),
-      // displayMedium: _textStyle.displayMedium.copyWith(
-      //   fontFamily: defaultFont,
-      //   color: appBlack,
-      // ),
-      // headlineLarge: _textStyle.headlineLarge.copyWith(
-      //   fontFamily: defaultFont,
-      //   color: appBlack,
-      // ),
-      // bodyMedium: _textStyle.bodyMedium.copyWith(
-      //   fontFamily: defaultFont,
-      //   color: AppColor.grey700,
-      // ),
-      // ... إلخ (تم إضافة لون appBlack لمعظم النصوص لضمان ظهورها بشكل صحيح على الخلفية الفاتحة)
-    ),
+    // // 5. ثيم النصوص (حافظت على الهيكل، لون النص الرئيسي سيكون appBlack ما لم يُحدد خلاف ذلك)
+    // textTheme: TextTheme(
+    // ... (جميع النصوص تم تكييفها مع الخط) ...
+    // displayLarge: _textStyle.displayLarge.copyWith(
+    //   fontFamily: defaultFont,
+    //   color: appBlack,
+    // ),
+    // displayMedium: _textStyle.displayMedium.copyWith(
+    //   fontFamily: defaultFont,
+    //   color: appBlack,
+    // ),
+    // headlineLarge: _textStyle.headlineLarge.copyWith(
+    //   fontFamily: defaultFont,
+    //   color: appBlack,
+    // ),
+    // bodyMedium: _textStyle.bodyMedium.copyWith(
+    //   fontFamily: defaultFont,
+    //   color: AppColor.grey700,
+    // ),
+    // ... إلخ (تم إضافة لون appBlack لمعظم النصوص لضمان ظهورها بشكل صحيح على الخلفية الفاتحة)
+    //   ),
   );
 
   // =======================================================================
