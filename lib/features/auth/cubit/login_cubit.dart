@@ -6,6 +6,7 @@ import 'package:flutter_tasck_app/core/errors/exceptions.dart';
 import 'package:flutter_tasck_app/features/auth/data/models/user_model.dart';
 import 'package:flutter_tasck_app/features/auth/data/services/auth_services.dart';
 import 'package:flutter_tasck_app/shared/data/services/storage_service.dart';
+import 'package:flutter_tasck_app/shared/functions/check_internet.dart';
 
 part 'login_state.dart';
 
@@ -23,15 +24,22 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
 
     try {
-      final UserModel user = await authRemoteDataSource.login(
-        username: userName,
-        password: password,
-      );
+      if (await checkInternet()) {
+        final UserModel user = await authRemoteDataSource.login(
+          username: userName,
+          password: password,
+        );
 
-      await storageService.saveUser(user);
-      emit(LoginSuccess(user: user));
+        await storageService.saveUser(user);
+        emit(LoginSuccess(user: user));
 
-      log('✅ Login successful for user: $userName');
+        log('✅ Login successful for user: $userName');
+      } else {
+        log('⚠️ No internet connection.');
+        throw ServerException(
+          errorModel: ErrorModel(message: 'No internet connection'),
+        );
+      }
     } on ServerException catch (e) {
       log('❌ Login failed: ${e.errorModel.message}');
       emit(LoginFailure(error: e.errorModel));
