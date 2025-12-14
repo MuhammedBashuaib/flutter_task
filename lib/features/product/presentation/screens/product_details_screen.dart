@@ -1,213 +1,109 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
+import 'package:flutter_tasck_app/features/product/presentation/widgets/build_price_and_quantity_section.dart';
+import 'package:flutter_tasck_app/features/product/presentation/widgets/build_reviews_content.dart';
 import 'package:flutter_tasck_app/features/product/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter_tasck_app/features/product/presentation/widgets/custom_floating_action_button.dart';
 import 'package:flutter_tasck_app/features/product/presentation/widgets/over_view_section.dart';
+import 'package:flutter_tasck_app/features/product/presentation/widgets/segmented_button_taps.dart';
 import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+// 1. تحويل إلى StatefulWidget لإدارة حالة التبويب النشط
+class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.product});
   final ProductModel product;
 
   @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  // 2. حالة لتخزين التبويب النشط (0: About, 1: Reviews)
+  int _currentTabIndex = 0;
+
+  // 3. دالة لتحديث الحالة عند الضغط على أزرار التبديل
+  void _onTabChanged(int index) {
+    setState(() {
+      _currentTabIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    initializeHWFSize(context);
+
+    // 💡 ودجت المحتوى النشط الذي سيتم عرضه (يتغير ارتفاعه ديناميكياً)
+    Widget activeTabContent;
+    if (_currentTabIndex == 0) {
+      activeTabContent = _buildAboutContent(context, widget.product);
+    } else {
+      activeTabContent = _buildReviewsContent(widget.product);
+    }
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: CustomFloatingActionButton(product: product),
+      floatingActionButton: CustomFloatingActionButton(product: widget.product),
 
       body: SizedBox(
         child: SingleChildScrollView(
+          // زيادة الـ padding السفلي لترك مساحة لـ FloatingActionButton
           padding: EdgeInsets.only(bottom: hScreen * 0.2),
           child: Column(
             children: [
               // App Bar
-              CustomAppBar(product: product),
+              CustomAppBar(product: widget.product),
               SizedBox(height: hScreen * 0.03),
 
               // Overview Section
-              OverviewSection(product: product),
+              OverviewSection(product: widget.product),
               SizedBox(height: hScreen * 0.03),
 
-              DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    TabBar(
-                      indicatorColor: AppColor.primaryColor,
-                      labelColor: Colors.black,
-                      unselectedLabelColor: Colors.grey[600],
-                      tabs: [
-                        Tab(
-                          child: Text(
-                            'About',
-                            style: TextStyle(fontSize: fontSize(size: 14)),
-                          ),
-                        ),
-                        Tab(
-                          child: Text(
-                            'Reviews',
-                            style: TextStyle(fontSize: fontSize(size: 14)),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: hScreen * 0.02),
-                  ],
-                ),
-              ),
+              // Segmented Tabs
+              SegmentedButtonTabs(onTabChanged: _onTabChanged),
+
               SizedBox(height: hScreen * 0.02),
 
-              // About Content
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
-                child: Text(
-                  product.description,
-                  style: TextStyle(
-                    color: Colors.grey[800],
-                    fontSize: fontSize(size: 14),
-                  ),
-                ),
-              ),
-              SizedBox(height: hScreen * 0.03),
+              // 🔑 المحتوى النشط (يتمدد ويتقلص بشكل طبيعي)
+              activeTabContent,
 
-              // Price & Quantity
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Unit Price',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: fontSize(size: 12),
-                          ),
-                        ),
-                        SizedBox(height: hScreen * 0.005),
-                        Text(
-                          '${product.price} RY',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: fontSize(size: 18),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Minimum Order',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: fontSize(size: 12),
-                          ),
-                        ),
-                        SizedBox(height: hScreen * 0.005),
-                        Row(
-                          children: [
-                            Container(
-                              width: wScreen * 0.08,
-                              height: wScreen * 0.08,
-                              decoration: BoxDecoration(
-                                color: const Color(0xfffff5f5),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '---',
-                                  style: TextStyle(
-                                    color: AppColor.primaryColor,
-                                    fontSize: fontSize(size: 12),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: wScreen * 0.02),
-                            Text(
-                              '2',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSize(size: 14),
-                              ),
-                            ),
-                            SizedBox(width: wScreen * 0.02),
-                            Container(
-                              width: wScreen * 0.08,
-                              height: wScreen * 0.08,
-                              decoration: BoxDecoration(
-                                color: AppColor.primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '+',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: fontSize(size: 16),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              // 💡 تم تقليل هذه المسافة لتكون مناسبة بين المحتوى وقسم السعر/الكمية
+              SizedBox(height: hScreen * 0.05),
+
+              // باقي الأقسام الثابتة أسفل التبديل (Price & Quantity)
+              _buildPriceAndQuantitySection(widget.product),
               SizedBox(height: hScreen * 0.03),
 
               // Total Price & Add to Cart
-              SizedBox(height: hScreen * 0.12),
+              SizedBox(height: hScreen * 0.03), // تقليل المسافة النهائية
             ],
           ),
         ),
       ),
-
-      // bottomNavigationBar: Container(
-      //   padding: EdgeInsets.all(wScreen * 0.04),
-      //   decoration: BoxDecoration(
-      //     color: Colors.white,
-      //     borderRadius: BorderRadius.vertical(
-      //       top: Radius.circular(wScreen * 0.05),
-      //     ),
-      //   ),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //     children: [
-      //       _buildBottomNavItem(Icons.home, 'Home', false),
-      //       _buildBottomNavItem(Icons.list_alt, 'Orders', false),
-      //       _buildBottomNavItem(Icons.shopping_cart, 'Cart', true),
-      //       _buildBottomNavItem(Icons.person, 'Account', false),
-      //     ],
-      //   ),
-      // ),
     );
   }
 
-  // Widget _buildBottomNavItem(IconData icon, String label, bool isSelected) {
-  //   return Column(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       Icon(
-  //         icon,
-  //         color: isSelected ? AppColor.primaryColor : Colors.grey[600],
-  //         size: wScreen * 0.06,
-  //       ),
-  //       SizedBox(height: hScreen * 0.005),
-  //       Text(
-  //         label,
-  //         style: TextStyle(
-  //           fontSize: fontSize(size: 12),
-  //           color: isSelected ? AppColor.primaryColor : Colors.grey[600],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+  // ودجت خاص لبناء محتوى "About"
+  Widget _buildAboutContent(BuildContext context, ProductModel product) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
+      child: Text(
+        product.description,
+        style: TextStyle(
+          color: Colors.grey[800],
+          fontSize: fontSize(size: 14),
+          height: 1.5, // تحسين قراءة النص
+        ),
+      ),
+    );
+  }
+
+  // ودجت خاص لبناء محتوى "Reviews" (المراجعات)
+  Widget _buildReviewsContent(ProductModel product) {
+    return BuildReviewsContent(product: product);
+  }
+
+  // ودجت خاص لبناء قسم السعر والكمية
+  Widget _buildPriceAndQuantitySection(ProductModel product) {
+    return BuildPriceAndQuantitySection(product: product);
+  }
 }

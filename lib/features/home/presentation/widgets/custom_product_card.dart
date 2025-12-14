@@ -20,7 +20,6 @@ class CustomProductCard extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           // Handle product card tap if needed
-          // Navigation.pushNamed(context, '/productDetails', arguments: product);
           Navigator.pushNamed(
             context,
             AppRoutes.productDetails,
@@ -33,13 +32,6 @@ class CustomProductCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(wScreen * 0.0375),
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: Colors.grey.withOpacity(0.2),
-              //     blurRadius: 5,
-              //     offset: Offset(0, hScreen * 0.002),
-              //   ),
-              // ],
             ),
             child: Row(
               children: [
@@ -135,40 +127,44 @@ class CustomProductCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: wScreen * 0.02),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.star,
+                Container(
+                  constraints: BoxConstraints(
+                    minHeight: wScreen * 0.15, // نفس ارتفاع الصورة
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: AppColor.primaryColor,
+                            size: fontSize(size: 14),
+                          ),
+                          SizedBox(width: wScreen * 0.02),
+                          Text(
+                            '${product.rating}',
+                            style: TextStyle(fontSize: fontSize(size: 14)),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: wScreen * 0.06,
+                        height: wScreen * 0.06,
+                        decoration: BoxDecoration(
                           color: AppColor.primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          color: AppColor.white,
                           size: fontSize(size: 14),
                         ),
-                        SizedBox(width: wScreen * 0.01),
-                        Text(
-                          '${product.rating}',
-                          style: TextStyle(fontSize: fontSize(size: 14)),
-                        ),
-                      ],
-                    ),
-                    // SizedBox(height: hScreen * 0.02),
-                    Container(
-                      width: wScreen * 0.06,
-                      height: wScreen * 0.06,
-                      decoration: BoxDecoration(
-                        color: AppColor.primaryColor,
-                        shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        Icons.add,
-                        color: AppColor.white,
-                        size: fontSize(size: 14),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
