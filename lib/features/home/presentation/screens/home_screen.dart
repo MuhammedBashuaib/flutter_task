@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CustomScrollView(
             physics: const ClampingScrollPhysics(),
             slivers: [
+              SliverToBoxAdapter(child: SizedBox(height: hScreen * 0.05)),
               // Header with Location & Search (on top of background)
               const HomeHeader(),
 
@@ -65,6 +66,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Spacing
                       SizedBox(height: hScreen * 0.03),
 
+                      // Popular Products Section Header
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: wScreen * 0.04,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Latest Products',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSize(size: 18),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'View All',
+                                style: TextStyle(
+                                  color: AppColor.primaryColor,
+                                  fontSize: fontSize(size: 14),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // SizedBox(height: hScreen * 0.02),
                       // Latest Products Section
                       const HorizontalPopularProductsSection(),
 

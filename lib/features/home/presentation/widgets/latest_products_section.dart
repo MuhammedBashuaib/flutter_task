@@ -4,11 +4,10 @@ import 'package:flutter_tasck_app/features/home/cubit/horizontal_fetch_products_
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
 import 'package:flutter_tasck_app/features/home/presentation/widgets/custom_product_cart_horiz.dart';
 import 'package:flutter_tasck_app/features/home/presentation/widgets/latest_products_section_loding.dart';
+import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 
 class HorizontalPopularProductsSection extends StatefulWidget {
-  const HorizontalPopularProductsSection({super.key, this.height = 260});
-
-  final double height;
+  const HorizontalPopularProductsSection({super.key});
 
   @override
   State<HorizontalPopularProductsSection> createState() =>
@@ -50,7 +49,7 @@ class _HorizontalPopularProductsSectionState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: widget.height,
+      height: hScreen * .24,
       child:
           BlocConsumer<
             HorizontalFetchProductsCubit,
