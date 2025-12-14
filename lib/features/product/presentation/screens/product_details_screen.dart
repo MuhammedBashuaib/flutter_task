@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasck_app/core/constants/app_color.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
+import 'package:flutter_tasck_app/features/product/presentation/widgets/custom_app_bar.dart';
+import 'package:flutter_tasck_app/features/product/presentation/widgets/custom_floating_action_button.dart';
+import 'package:flutter_tasck_app/features/product/presentation/widgets/over_view_section.dart';
+import 'package:flutter_tasck_app/shared/utils/sizes.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key, required this.product});
@@ -9,344 +13,201 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          margin: const EdgeInsets.all(16),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.only(
-              bottom: 80,
-            ), // لتجنب تغطية الـ Bottom Nav
-            child: Column(
-              children: [
-                // App Bar
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: CustomFloatingActionButton(product: product),
+
+      body: SizedBox(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: hScreen * 0.2),
+          child: Column(
+            children: [
+              // App Bar
+              CustomAppBar(product: product),
+              SizedBox(height: hScreen * 0.03),
+
+              // Overview Section
+              OverviewSection(product: product),
+              SizedBox(height: hScreen * 0.03),
+
+              DefaultTabController(
+                length: 2,
+                child: Column(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back),
-                    ),
-                    const Text(
-                      'Details',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Product Header
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.category,
-                            style: TextStyle(
-                              color: Colors.orange[700],
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            product.title,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Text(
-                                'UNIT PRICE',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                '${product.price} RY',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: AppColor.primaryColor,
-                                size: 16,
-                              ),
-                              Text(product.rating.toString()),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 120,
-                      height: 160,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.local_drink,
-                          size: 60,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Overview Section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Overview',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildOverviewItem(Icons.store, 'Dolce & Gabbana'),
-                          _buildOverviewItem(Icons.update, '7 Day'),
-                          _buildOverviewItem(Icons.inventory, 'low Stock'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Tabs: About / Reviews
-                DefaultTabController(
-                  length: 2,
-                  child: TabBar(
-                    indicatorColor: Colors.orange[700],
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.grey[600],
-                    tabs: const [
-                      Tab(text: 'About'),
-                      Tab(text: 'Reviews'),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // About Content
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'A vibrant and fruity perfume, blending mango, jasmine, and light woods. A vibrant and fruity perfume, blending mango, jasmine, and light woods.',
-                    style: TextStyle(color: Colors.grey[800]),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Price & Quantity
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Unit Price',
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                          const SizedBox(height: 4),
-                          const Text(
-                            '34.000 RY',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Minimum Order',
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(child: Text('-')),
-                              ),
-                              const SizedBox(width: 8),
-                              const Text(
-                                '2',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(width: 8),
-                              Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: Colors.orange[100],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(child: Text('+')),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Total Price & Add to Cart
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.orange[100],
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Total Price',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              const Text(
-                                '34.000 RY',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
+                    TabBar(
+                      indicatorColor: AppColor.primaryColor,
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.grey[600],
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            'About',
+                            style: TextStyle(fontSize: fontSize(size: 14)),
                           ),
                         ),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.add_shopping_cart),
-                          label: const Text('Add to Cart'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange[700],
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                        Tab(
+                          child: Text(
+                            'Reviews',
+                            style: TextStyle(fontSize: fontSize(size: 14)),
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(height: hScreen * 0.02),
+                  ],
+                ),
+              ),
+              SizedBox(height: hScreen * 0.02),
+
+              // About Content
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
+                child: Text(
+                  product.description,
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: fontSize(size: 14),
                   ),
                 ),
-                const SizedBox(height: 100), // Spacer for bottom nav
-              ],
-            ),
+              ),
+              SizedBox(height: hScreen * 0.03),
+
+              // Price & Quantity
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: wScreen * 0.04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Unit Price',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: fontSize(size: 12),
+                          ),
+                        ),
+                        SizedBox(height: hScreen * 0.005),
+                        Text(
+                          '${product.price} RY',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize(size: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Minimum Order',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: fontSize(size: 12),
+                          ),
+                        ),
+                        SizedBox(height: hScreen * 0.005),
+                        Row(
+                          children: [
+                            Container(
+                              width: wScreen * 0.08,
+                              height: wScreen * 0.08,
+                              decoration: BoxDecoration(
+                                color: const Color(0xfffff5f5),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '---',
+                                  style: TextStyle(
+                                    color: AppColor.primaryColor,
+                                    fontSize: fontSize(size: 12),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: wScreen * 0.02),
+                            Text(
+                              '2',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSize(size: 14),
+                              ),
+                            ),
+                            SizedBox(width: wScreen * 0.02),
+                            Container(
+                              width: wScreen * 0.08,
+                              height: wScreen * 0.08,
+                              decoration: BoxDecoration(
+                                color: AppColor.primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '+',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: fontSize(size: 16),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: hScreen * 0.03),
+
+              // Total Price & Add to Cart
+              SizedBox(height: hScreen * 0.12),
+            ],
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildBottomNavItem(Icons.home, 'Home', false),
-            _buildBottomNavItem(Icons.list_alt, 'Orders', false),
-            _buildBottomNavItem(Icons.shopping_cart, 'Cart', true),
-            _buildBottomNavItem(Icons.person, 'Account', false),
-          ],
-        ),
-      ),
+
+      // bottomNavigationBar: Container(
+      //   padding: EdgeInsets.all(wScreen * 0.04),
+      //   decoration: BoxDecoration(
+      //     color: Colors.white,
+      //     borderRadius: BorderRadius.vertical(
+      //       top: Radius.circular(wScreen * 0.05),
+      //     ),
+      //   ),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //     children: [
+      //       _buildBottomNavItem(Icons.home, 'Home', false),
+      //       _buildBottomNavItem(Icons.list_alt, 'Orders', false),
+      //       _buildBottomNavItem(Icons.shopping_cart, 'Cart', true),
+      //       _buildBottomNavItem(Icons.person, 'Account', false),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
-  Widget _buildOverviewItem(IconData icon, String label) {
-    return Column(
-      children: [
-        Icon(icon, color: Colors.grey[600], size: 24),
-        const SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-      ],
-    );
-  }
-
-  Widget _buildBottomNavItem(IconData icon, String label, bool isSelected) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          color: isSelected ? Colors.orange[700] : Colors.grey[600],
-          size: 24,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: isSelected ? Colors.orange[700] : Colors.grey[600],
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildBottomNavItem(IconData icon, String label, bool isSelected) {
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       Icon(
+  //         icon,
+  //         color: isSelected ? AppColor.primaryColor : Colors.grey[600],
+  //         size: wScreen * 0.06,
+  //       ),
+  //       SizedBox(height: hScreen * 0.005),
+  //       Text(
+  //         label,
+  //         style: TextStyle(
+  //           fontSize: fontSize(size: 12),
+  //           color: isSelected ? AppColor.primaryColor : Colors.grey[600],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
