@@ -4,7 +4,7 @@ import 'package:flutter_tasck_app/core/api/api_consumer.dart';
 import 'package:flutter_tasck_app/core/api/end_points.dart';
 import 'package:flutter_tasck_app/core/errors/error_model.dart';
 import 'package:flutter_tasck_app/core/errors/exceptions.dart';
-import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
+import 'package:flutter_tasck_app/features/home/data/models/product_reposetry.dart';
 
 abstract class ProductServices {
   Future<ProductsResponse> fetchProducts({

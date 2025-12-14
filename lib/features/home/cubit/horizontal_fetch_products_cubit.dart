@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tasck_app/core/errors/exceptions.dart';
 import 'package:flutter_tasck_app/features/home/data/models/product_model.dart';
+import 'package:flutter_tasck_app/features/home/data/models/product_reposetry.dart';
 import 'package:flutter_tasck_app/features/home/data/services/product_services.dart';
 
 part 'horizontal_fetch_products_state.dart';

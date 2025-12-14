@@ -1,3 +1,5 @@
+import 'package:flutter_tasck_app/core/api/end_points.dart';
+
 class ProductModel {
   final int id;
   final String title;
@@ -61,59 +63,59 @@ class ProductModel {
   // Factory method to create ProductModel from JSON
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id'] ?? 0,
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      category: json['category'] ?? '',
-      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      id: json[ProductKeys.id] ?? 0,
+      title: json[ProductKeys.title] ?? '',
+      description: json[ProductKeys.description] ?? '',
+      category: json[ProductKeys.category] ?? '',
+      price: (json[ProductKeys.price] as num?)?.toDouble() ?? 0.0,
       discountPercentage:
-          (json['discountPercentage'] as num?)?.toDouble() ?? 0.0,
-      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      stock: json['stock'] ?? 0,
-      tags: List<String>.from(json['tags'] ?? []),
-      brand: json['brand'] ?? '',
-      sku: json['sku'] ?? '',
-      weight: json['weight'] ?? 0,
-      dimensions: Dimensions.fromJson(json['dimensions'] ?? {}),
-      warrantyInformation: json['warrantyInformation'] ?? '',
-      shippingInformation: json['shippingInformation'] ?? '',
-      availabilityStatus: json['availabilityStatus'] ?? '',
+          (json[ProductKeys.discountPercentage] as num?)?.toDouble() ?? 0.0,
+      rating: (json[ProductKeys.rating] as num?)?.toDouble() ?? 0.0,
+      stock: json[ProductKeys.stock] ?? 0,
+      tags: List<String>.from(json[ProductKeys.tags] ?? []),
+      brand: json[ProductKeys.brand] ?? '',
+      sku: json[ProductKeys.sku] ?? '',
+      weight: json[ProductKeys.weight] ?? 0,
+      dimensions: Dimensions.fromJson(json[ProductKeys.dimensions] ?? {}),
+      warrantyInformation: json[ProductKeys.warrantyInformation] ?? '',
+      shippingInformation: json[ProductKeys.shippingInformation] ?? '',
+      availabilityStatus: json[ProductKeys.availabilityStatus] ?? '',
       reviews: List<Review>.from(
-        (json['reviews'] ?? []).map((x) => Review.fromJson(x)),
+        (json[ProductKeys.reviews] ?? []).map((x) => Review.fromJson(x)),
       ),
-      returnPolicy: json['returnPolicy'] ?? '',
-      minimumOrderQuantity: json['minimumOrderQuantity'] ?? 1,
-      meta: Meta.fromJson(json['meta'] ?? {}),
-      images: List<String>.from(json['images'] ?? []),
-      thumbnail: json['thumbnail'] ?? '',
+      returnPolicy: json[ProductKeys.returnPolicy] ?? '',
+      minimumOrderQuantity: json[ProductKeys.minimumOrderQuantity] ?? 1,
+      meta: Meta.fromJson(json[ProductKeys.meta] ?? {}),
+      images: List<String>.from(json[ProductKeys.images] ?? []),
+      thumbnail: json[ProductKeys.thumbnail] ?? '',
     );
   }
 
   // Convert ProductModel to JSON
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'category': category,
-      'price': price,
-      'discountPercentage': discountPercentage,
-      'rating': rating,
-      'stock': stock,
-      'tags': tags,
-      'brand': brand,
-      'sku': sku,
-      'weight': weight,
-      'dimensions': dimensions?.toJson(),
-      'warrantyInformation': warrantyInformation,
-      'shippingInformation': shippingInformation,
-      'availabilityStatus': availabilityStatus,
-      'reviews': reviews.map((x) => x.toJson()).toList(),
-      'returnPolicy': returnPolicy,
-      'minimumOrderQuantity': minimumOrderQuantity,
-      'meta': meta?.toJson(),
-      'images': images,
-      'thumbnail': thumbnail,
+      ProductKeys.id: id,
+      ProductKeys.title: title,
+      ProductKeys.description: description,
+      ProductKeys.category: category,
+      ProductKeys.price: price,
+      ProductKeys.discountPercentage: discountPercentage,
+      ProductKeys.rating: rating,
+      ProductKeys.stock: stock,
+      ProductKeys.tags: tags,
+      ProductKeys.brand: brand,
+      ProductKeys.sku: sku,
+      ProductKeys.weight: weight,
+      ProductKeys.dimensions: dimensions?.toJson(),
+      ProductKeys.warrantyInformation: warrantyInformation,
+      ProductKeys.shippingInformation: shippingInformation,
+      ProductKeys.availabilityStatus: availabilityStatus,
+      ProductKeys.reviews: reviews.map((x) => x.toJson()).toList(),
+      ProductKeys.returnPolicy: returnPolicy,
+      ProductKeys.minimumOrderQuantity: minimumOrderQuantity,
+      ProductKeys.meta: meta?.toJson(),
+      ProductKeys.images: images,
+      ProductKeys.thumbnail: thumbnail,
     };
   }
 
@@ -198,14 +200,18 @@ class Dimensions {
 
   factory Dimensions.fromJson(Map<String, dynamic> json) {
     return Dimensions(
-      width: (json['width'] as num?)?.toDouble() ?? 0.0,
-      height: (json['height'] as num?)?.toDouble() ?? 0.0,
-      depth: (json['depth'] as num?)?.toDouble() ?? 0.0,
+      width: (json[ProductKeys.width] as num?)?.toDouble() ?? 0.0,
+      height: (json[ProductKeys.height] as num?)?.toDouble() ?? 0.0,
+      depth: (json[ProductKeys.depth] as num?)?.toDouble() ?? 0.0,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'width': width, 'height': height, 'depth': depth};
+    return {
+      ProductKeys.width: width,
+      ProductKeys.height: height,
+      ProductKeys.depth: depth,
+    };
   }
 
   Dimensions copyWith({double? width, double? height, double? depth}) {
@@ -240,21 +246,23 @@ class Review {
 
   factory Review.fromJson(Map<String, dynamic> json) {
     return Review(
-      rating: json['rating'] ?? 0,
-      comment: json['comment'] ?? '',
-      date: DateTime.parse(json['date'] ?? DateTime.now().toIso8601String()),
-      reviewerName: json['reviewerName'] ?? '',
-      reviewerEmail: json['reviewerEmail'] ?? '',
+      rating: json[ProductKeys.rating] ?? 0,
+      comment: json[ProductKeys.comment] ?? '',
+      date: DateTime.parse(
+        json[ProductKeys.date] ?? DateTime.now().toIso8601String(),
+      ),
+      reviewerName: json[ProductKeys.reviewerName] ?? '',
+      reviewerEmail: json[ProductKeys.reviewerEmail] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'rating': rating,
-      'comment': comment,
-      'date': date.toIso8601String(),
-      'reviewerName': reviewerName,
-      'reviewerEmail': reviewerEmail,
+      ProductKeys.rating: rating,
+      ProductKeys.comment: comment,
+      ProductKeys.date: date.toIso8601String(),
+      ProductKeys.reviewerName: reviewerName,
+      ProductKeys.reviewerEmail: reviewerEmail,
     };
   }
 
@@ -291,22 +299,22 @@ class Meta {
   factory Meta.fromJson(Map<String, dynamic> json) {
     return Meta(
       createdAt: DateTime.parse(
-        json['createdAt'] ?? DateTime.now().toIso8601String(),
+        json[ProductKeys.createdAt] ?? DateTime.now().toIso8601String(),
       ),
       updatedAt: DateTime.parse(
-        json['updatedAt'] ?? DateTime.now().toIso8601String(),
+        json[ProductKeys.updatedAt] ?? DateTime.now().toIso8601String(),
       ),
-      barcode: json['barcode'] ?? '',
-      qrCode: json['qrCode'] ?? '',
+      barcode: json[ProductKeys.barcode] ?? '',
+      qrCode: json[ProductKeys.qrCode] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-      'barcode': barcode,
-      'qrCode': qrCode,
+      ProductKeys.createdAt: createdAt.toIso8601String(),
+      ProductKeys.updatedAt: updatedAt.toIso8601String(),
+      ProductKeys.barcode: barcode,
+      ProductKeys.qrCode: qrCode,
     };
   }
 
@@ -322,108 +330,5 @@ class Meta {
       barcode: barcode ?? this.barcode,
       qrCode: qrCode ?? this.qrCode,
     );
-  }
-}
-
-// Response model for paginated products
-class ProductsResponse {
-  final List<ProductModel> products;
-  final int total;
-  final int skip;
-  final int limit;
-
-  ProductsResponse({
-    required this.products,
-    required this.total,
-    required this.skip,
-    required this.limit,
-  });
-
-  factory ProductsResponse.fromJson(Map<String, dynamic> json) {
-    return ProductsResponse(
-      products: List<ProductModel>.from(
-        (json['products'] ?? []).map((x) => ProductModel.fromJson(x)),
-      ),
-      total: json['total'] ?? 0,
-      skip: json['skip'] ?? 0,
-      limit: json['limit'] ?? 0,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'products': products.map((x) => x.toJson()).toList(),
-      'total': total,
-      'skip': skip,
-      'limit': limit,
-    };
-  }
-}
-
-// Helper functions for product operations
-class ProductHelper {
-  // Sort products by price
-  static List<ProductModel> sortByPrice(
-    List<ProductModel> products, {
-    bool ascending = true,
-  }) {
-    products.sort(
-      (a, b) =>
-          ascending ? a.price.compareTo(b.price) : b.price.compareTo(a.price),
-    );
-    return products;
-  }
-
-  // Sort products by rating
-  static List<ProductModel> sortByRating(
-    List<ProductModel> products, {
-    bool ascending = true,
-  }) {
-    products.sort(
-      (a, b) => ascending
-          ? a.rating.compareTo(b.rating)
-          : b.rating.compareTo(a.rating),
-    );
-    return products;
-  }
-
-  // Filter products by category
-  static List<ProductModel> filterByCategory(
-    List<ProductModel> products,
-    String category,
-  ) {
-    return products
-        .where(
-          (product) => product.category.toLowerCase() == category.toLowerCase(),
-        )
-        .toList();
-  }
-
-  // Filter products with discount
-  static List<ProductModel> filterWithDiscount(List<ProductModel> products) {
-    return products.where((product) => product.hasDiscount).toList();
-  }
-
-  // Search products by title or description
-  static List<ProductModel> searchProducts(
-    List<ProductModel> products,
-    String query,
-  ) {
-    final lowerQuery = query.toLowerCase();
-    return products
-        .where(
-          (product) =>
-              product.title.toLowerCase().contains(lowerQuery) ||
-              product.description.toLowerCase().contains(lowerQuery) ||
-              product.brand.toLowerCase().contains(lowerQuery),
-        )
-        .toList();
-  }
-
-  // Calculate average rating from reviews
-  static double calculateAverageRating(List<Review> reviews) {
-    if (reviews.isEmpty) return 0.0;
-    final totalRating = reviews.fold(0, (sum, review) => sum + review.rating);
-    return totalRating / reviews.length;
   }
 }
