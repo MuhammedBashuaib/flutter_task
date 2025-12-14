@@ -104,6 +104,7 @@ class _PopularProductsSectionState extends State<PopularProductsSection> {
               shrinkWrap: true, // يجعل القائمة تتكيف مع محتواها
               physics:
                   const NeverScrollableScrollPhysics(), // يمنع التمرير الداخلي (التمرير الخارجي فقط)
+              padding: EdgeInsetsDirectional.zero,
               itemBuilder: (context, index) {
                 // بناء بطاقة لكل منتج
                 final product = products[index];
