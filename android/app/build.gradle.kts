@@ -15,8 +15,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
     defaultConfig {
